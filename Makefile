@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall
+CFLAGS=-g -c -Wall
 INCLUDEDIR=-I.
 LDFLAGS=
 EXECUTABLES=slatkin-enumerate slatkin-mc 

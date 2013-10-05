@@ -3,10 +3,54 @@
 	{
 		"selected_items":
 		[
+			[
+				"sl",
+				"slatkin-common"
+			],
+			[
+				"slat",
+				"slatkin-enumerate"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 414,
+				"line_ending": "Unix",
+				"name": "CC=gcc"
+			}
+		},
+		{
+			"file": "montecarlo.c",
+			"settings":
+			{
+				"buffer_size": 3609,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "slatkin-exact-tools\n===================\n\nCommand line tools and Python module for Montgomery Slatkin's \"Exact\" test of neutrality in a set of gene or trait counts\n\n\n### Goal ###\n\nThis package is a refactoring of Montgomery Slatkin's [code for an \"Exact\" test for neutrality](http://ib.berkeley.edu/labs/slatkin/monty/Ewens_exact.program), implementing the \n\n\n\n",
+			"file": "README.md",
+			"file_size": 163,
+			"file_write_time": 130254039250000000,
+			"settings":
+			{
+				"buffer_size": 360,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "slatkin-common.h",
+			"settings":
+			{
+				"buffer_size": 797,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -44,6 +88,11 @@
 	},
 	"file_history":
 	[
+		"/Users/mark/Dropbox/Research/Dissertation Project/src/slatkin-exact-tools/old/slatkin-montecarlo/montecarlo-prob-theta-est.c",
+		"/Users/mark/Dropbox/Research/Dissertation Project/src/slatkin-exact-tools/src/slatkin-common.h",
+		"/Users/mark/Dropbox/Research/Dissertation Project/src/slatkin-exact-tools/src/slatkin-common.c",
+		"/Users/mark/Dropbox/Research/Dissertation Project/src/slatkin-exact-tools/src/montecarlo.c",
+		"/Users/mark/Dropbox/Research/Dissertation Project/src/slatkin-exact-tools/src/enumerate.c",
 		"/Users/mark/Dropbox/Research/websites/lnraw/_posts/2013-09-30-medium-data.md",
 		"/Users/mark/Dropbox/Research/websites/lnraw/_posts/2013-07-10-time-perspectivism-annotated-bib.md",
 		"/Users/mark/Dropbox/Research/websites/lnraw/_posts/2013-03-31-darwinian-populational-models.md",
@@ -78,6 +127,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"k1",
 			"**",
 			"navbar",
 			"javascript",
@@ -99,8 +149,119 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 414,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								414,
+								414
+							]
+						],
+						"settings":
+						{
+							"auto_name": "CC=gcc",
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "montecarlo.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3609,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3082,
+								3082
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								360,
+								360
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "slatkin-common.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 797,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								393,
+								393
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -110,7 +271,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{

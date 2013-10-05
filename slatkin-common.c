@@ -14,7 +14,7 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	slatkin_result results;
 	double theta_estimate;
 	int i, j, k, n, repno, Ecount, Fcount;
-	int *r_random;
+	int *r_random, *r_random_to_free;
 	double E_obs, F_obs;
 	double **b,  *ranvec;
 
@@ -28,7 +28,25 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 		k++;
 		n+=r_obs[k];
     }
+
+    /*
+		memory management notes - the following are dynamically allocated and need to be freed:
+
+		Slatkin allocates these in the ivector, vector, and matrix methods, BUT does not pass back
+		the raw pointer to the allocated region or "head." Instead, he passes back the spot where he wants
+		the calling code to write data (in the case of the vector call especially).  So...we have to readjust
+		the pointers *back* in order to free them...wacky, but true.  
+
+		r_random -- what's being returned is head + 1, so free r_random - 1
+		ranvec -- just free this pointer
+		b -- have to walk K+1 rows, free each of the rows, then free b
+    */
+
+
+
 	r_random = ivector(0, k+1);
+	r_random_to_free = r_random - 1;
+
 	r_random[0] = r_random[k+1] = 0;
 	ranvec = vector(1, k-1);  // to avoid doing this in each replicate
 	
@@ -61,6 +79,18 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 
     results.probability = (double) Ecount / (double) maxreps;
     results.theta_estimate = theta_estimate;
+
+    /* free the dynamically allocated memory - pretty sure this is still leaking? */
+    free(ranvec);
+    free(r_random_to_free);
+
+    /*
+    for(i=1; i <= k; i++) {
+    	free(b[i]);
+    	printf("freed b[%i]\n", i);
+    	fflush(stdout);
+    }*/
+    free(b);
 
     return results;
 }
