@@ -16,7 +16,7 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	int i, j, k, n, repno, Ecount, Fcount;
 	int *r_random, *r_random_to_free;
 	double E_obs, F_obs;
-	double **b,  *ranvec;
+	double *ranvec;
 
 	gsrand(time(NULL));
 	
@@ -52,7 +52,8 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	
 	/*  fill b matrix  */
 	
-	b = matrix(1, k, 1, n);
+	double **b = matrix(1, k, 1, n);
+
 	for (j=1; j<=n; j++)
 		b[1][j] = 1.0 / j;
 	for (i=2; i<=k; i++)  {
@@ -80,16 +81,31 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
     results.probability = (double) Ecount / (double) maxreps;
     results.theta_estimate = theta_estimate;
 
-    /* free the dynamically allocated memory - pretty sure this is still leaking? */
+    /* free the dynamically allocated memory - the matrix b is still problematic */
     free(ranvec);
     free(r_random_to_free);
 
-    /*
-    for(i=1; i <= k; i++) {
-    	free(b[i]);
-    	printf("freed b[%i]\n", i);
-    	fflush(stdout);
-    }*/
+
+
+    /* 
+		the allocations occur in the matrix() function, starting on line 207
+
+		The matrix first allocates a number of rows (k) as pointers to doubles.  
+		then it allocates all the columns (n) as pointers to doubles.  
+		So to unwind this, we need to walk the matrix and free each row of doubles, and then we 
+		can free the original list of double* pointers to the rows themselves.  
+
+		right?  
+    */
+
+	// columns are n+2 because ncol in matrix = n+1, and then he adds NR_END = 1 to it.  
+	int col_size = (n+2) * sizeof(double);
+	double **row_ptr = b;
+	for(i=1; i <= k+1; i++) {
+		free(row_ptr);
+		row_ptr += col_size;
+	}
+
     free(b);
 
     return results;
@@ -189,17 +205,19 @@ double **matrix(long nrl, long nrh, long ncl, long nch)
 	double **m;
 	void nrerror(char error_text[]);
     
-	/* allocate pointers to rows */
+	
+
+	// allocate pointers to rows 
 	m=(double **) malloc((size_t)((nrow+NR_END)*sizeof(double*)));
 	if (!m) nrerror("allocation failure 1 in matrix()");
 	m += NR_END;
 	m -= nrl;
     
-	/* allocate rows and set pointers to them */
+	// allocate rows and set pointers to them 
 	m[nrl]=(double *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(double)));
 	if (!m[nrl]) nrerror("allocation failure 2 in matrix()");
 	m[nrl] += NR_END;
-	m[nrl] -= ncl;
+	m[nrl] -= ncl; 
     
 	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
     
