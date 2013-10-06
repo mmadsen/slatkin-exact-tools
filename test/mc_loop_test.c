@@ -48,7 +48,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "slatkin-common.h"
+#include "../slatkin-common.h"
 
 
 #define min(x, y)  (((x) < (y)) ? x : y)
@@ -67,12 +67,7 @@ int main(int argc, char *argv[]) {
 	int i,  k, maxrep;
 	slatkin_result results;
 
-    
-	if (argc == 1)  {
-		printf("Specify the number of replicates, and then the configuration on the command line\n");
-		exit(0);
-	}
-
+   
 
 	maxrep = 100000;
 	/*
@@ -89,7 +84,7 @@ int main(int argc, char *argv[]) {
 		printf(" %i ", r_obs[i]);
 	}*/
 
-	for(int i=0; i < 10000; i++) {
+	for(i=0; i < 1000; i++) {
 		results = slatkin_mc(maxrep, r_obs);
 		printf("%g\t%g\n", results.probability, results.theta_estimate );	
 	}

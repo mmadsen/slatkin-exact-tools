@@ -3,7 +3,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
+
 #include "slatkin-common.h"
+#include "mersenne.h"
 
 
 static int seed;
@@ -18,7 +21,7 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	double E_obs, F_obs;
 	double *ranvec;
 
-	gsrand(time(NULL));
+	seedMT(time(NULL));
 	
 	/* Find k and n from the observed configuration  */
 	
@@ -52,7 +55,8 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	
 	/*  fill b matrix  */
 	
-	double **b = matrix(1, k, 1, n);
+	//double **b = matrix(1, k, 1, n);
+	double **b = create2DDoubleArray(k+1, n+1);
 
 	for (j=1; j<=n; j++)
 		b[1][j] = 1.0 / j;
@@ -98,15 +102,10 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 		right?  
     */
 
-	// columns are n+2 because ncol in matrix = n+1, and then he adds NR_END = 1 to it.  
-	int col_size = (n+2) * sizeof(double);
-	double **row_ptr = b;
-	for(i=1; i <= k+1; i++) {
-		//free(*row_ptr);
-		row_ptr += col_size;
+	for(i=0; i < k+1; i++) {
+		free(b[i]);
 	}
-
-    free(b);
+	free(b);
 
     return results;
 }
@@ -197,9 +196,22 @@ double kval(double x, int n)  {
 }
 
 
+double** create2DDoubleArray(int rows, int cols) {
+	double **array;
+	int i;
+	array = (double**) malloc(rows * sizeof(double*));
+	for(i=0; i < rows; i++) {
+		array[i] = (double*) malloc(cols * sizeof(double));
+	}
+	return array;
+}
+
+
+
+/* DEPRECATED 
 
 double **matrix(long nrl, long nrh, long ncl, long nch)
-/* allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] */
+// allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] 
 {
 	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
 	double **m;
@@ -221,9 +233,9 @@ double **matrix(long nrl, long nrh, long ncl, long nch)
     
 	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
     
-	/* return pointer to array of pointers to rows */
+	// return pointer to array of pointers to rows 
 	return m;
-}
+} */
 
 double *vector(long nl, long nh)
 /* allocate a double vector with subscript range v[nl..nh] */
@@ -264,10 +276,14 @@ int s;
 
 
 
-double unif()  /* This is drand renamed to be consistent with my usage  */
+double unif()  /* REIMPLEMENTED to use Mersenne twister as the PRNG  */
 {
-	int grand();
-	return ((double) grand() / RM);
+	//int grand();
+	//return ((double) grand() / RM);
+
+	return ((double) randomMT() / UINT_MAX);
+
+
 }
 
 int grand()

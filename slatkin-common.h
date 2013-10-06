@@ -38,5 +38,6 @@ void gsrand(int s);
 double unif();
 int grand();
 
+double** create2DDoubleArray(int rows, int cols);
 
 #endif
