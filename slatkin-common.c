@@ -102,7 +102,7 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	int col_size = (n+2) * sizeof(double);
 	double **row_ptr = b;
 	for(i=1; i <= k+1; i++) {
-		free(row_ptr);
+		//free(*row_ptr);
 		row_ptr += col_size;
 	}
 
