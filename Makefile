@@ -4,11 +4,16 @@ INCLUDEDIR=-I.
 LDFLAGS=
 EXECUTABLES=slatkin-enumerate slatkin-mc 
 SOURCES=slatkin-common.c enumerate.c montecarlo.c mersenne.c
+SWIG_SRC=slatkinexact.i
 OBJECTS=$(SOURCES:.c=.o)
+SWIG=swig -python
 
 
-all: $(EXECUTABLES) $(OBJECTS)
+all: $(EXECUTABLES) $(OBJECTS) python-ext
 	
+
+python-ext:
+	$(SWIG) $(SWIG_SRC)
 
 slatkin-enumerate: enumerate.o
 	$(CC) -o slatkin-enumerate enumerate.o
@@ -24,4 +29,5 @@ mc-loop-test: $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.o $(EXECUTABLES)
+	rm -f *.o $(EXECUTABLES) slatkinexact_wrap.c slatkinexact.py *.so
+	rm -rf build
