@@ -46,7 +46,20 @@ print "prob: %s    theta: %s" % (prob, theta)
 Passing the length of the list is ugly, and un-Pythonic, but it also made figuring out the input typemap for converting the Python list _vastly_ easier.  As in, nothing else I was trying would work.  This may change in a future version if I learn more about SWIG typemapping.
 
 The python module is constructed most easily by running `make python` or `make all`, and is installed by running `make pyinstall`.  The latter will install the built module to the user's current Python distribution, as determined by the python interpreter in the user's path.  In some cases, you may need `sudo make pyinstall` to make this work, or to make the module available for all users on the system.  
-  
+
+### Random Number Generator ###
+
+I also noted that Slatkin was implementing his own PRNG in the original code.  Today, there's no need to implement our own, and potentially get it wrong.  Instead, I'm building in the Mersenne Twister MT19937 as implemented in `mersenne.c`, which carries the following attribution legend:
+
+```
+// The code as Shawn received it included the following notice:
+//
+//   Copyright (C) 1997 Makoto Matsumoto and Takuji Nishimura.  When
+//   you use this, send an e-mail to <matumoto@math.keio.ac.jp> with
+//   an appropriate reference to your work.
+//   It would be nice to CC: <Cokus@math.washington.edu> when you write.
+
+```
 
 ### Memory Management ###
 
@@ -56,7 +69,7 @@ This has been fixed, which means that it should be possible to write R or Python
 
 ### License ###
 
-Given that Slatkin put no explicit license in his code, and seemingly placed it in the public domain, I have considered it OK to re-mix and refactor his code in this manner, and re-release the result.  I am attaching an Apache Public License (2.0) to this repository and code, to ensure that others will be able to use the code, and pay forward Slatkin's generosity in releasing the code in the first place.  
+Given that Slatkin put no explicit license in his code, and seemingly placed it in the public domain, I have considered it OK to re-mix and refactor his code in this manner, and re-release the result.  I am attaching an GNU General Public License (version 3.0) to this repository and code, to ensure that others will be able to use the code, and pay forward Slatkin's generosity in releasing the code in the first place.  This also matches the license given in the Mersenne Twister code.  
 
 
 
