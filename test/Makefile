@@ -12,7 +12,7 @@ all: $(EXECUTABLES) $(OBJECTS)
 	
 
 mc-loop-test: $(OBJECTS)
-	$(CC) -o mc-loop-test mc_loop_test.o ../slatkin-common.o
+	$(CC) -o mc-loop-test mc_loop_test.o ../slatkin.o
 
 
 .c.o:

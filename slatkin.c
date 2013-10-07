@@ -5,13 +5,49 @@
 #include <time.h>
 #include <limits.h>
 
-#include "slatkin-common.h"
+#include "slatkin.h"
 #include "mersenne.h"
 
 
 static int seed;
 
 /* Main External API */
+
+
+void montecarlo(int maxreps, int** counts, int numalleles, double* probability, double* theta_estimate) {
+	slatkin_result results;
+	int r_obs[numalleles + 2]; /* slatkin's code expects zeros on both ends of the counts array */
+	int i;
+
+	r_obs[0] = 0;
+
+	for(i = 1; i <= numalleles; i++) {
+		r_obs[i] = counts[i-1];
+	}
+
+	r_obs[numalleles + 1] = 0;
+
+	/*
+	printf("Configuration entered on command line: ");
+	for (i = 0; i <= numalleles + 1; i++) {
+		printf(" %i ", r_obs[i]);
+	}
+	printf("\n");
+	*/
+
+	results = slatkin_mc(maxreps, r_obs);
+
+	/* printf("prob: %f theta: %f\n", results.probability, results.theta_estimate); */
+
+	*probability = results.probability;
+	*theta_estimate = results.theta_estimate;
+}
+
+
+
+
+
+// used by the original main() program for montecarlo.c
 
 slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 	slatkin_result results;

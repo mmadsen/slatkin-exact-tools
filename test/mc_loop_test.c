@@ -48,7 +48,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../slatkin-common.h"
+#include "../slatkin.h"
 
 
 #define min(x, y)  (((x) < (y)) ? x : y)

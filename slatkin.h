@@ -6,7 +6,7 @@ typedef struct {
 	double theta_estimate;
 } slatkin_result;
 
-
+#define KLIMIT	10000	/*  maximum number of alleles  */
 
 #define NR_END 1
 
@@ -21,6 +21,7 @@ typedef struct {
 /* Main API function, should be called from outside */
 
 slatkin_result slatkin_mc(int maxreps, int r_obs[]);
+void montecarlo(int maxreps, int** counts, int numalleles, double* probability, double* theta_estimate);
 
 
 /* Declaration of internal methods */
