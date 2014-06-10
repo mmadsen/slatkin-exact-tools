@@ -14,9 +14,10 @@ all: $(EXECUTABLES) $(OBJECTS) python
 
 python:
 	$(SWIG) $(SWIG_SRC)
+	python setup.py build_ext
 	python setup.py build
 
-pyinstall:
+install:
 	python setup.py install
 
 
