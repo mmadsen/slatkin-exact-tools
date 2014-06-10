@@ -8,6 +8,6 @@ setup(name = "slatkintools",
 	  author_email = "mark@madsenlab.org",
 	  url = "https://github.com/mmadsen/slatkin-exact-tools",
 	  py_modules = ['slatkin'],
-	  ext_modules = [Extension('_slatkin', sources = ['slatkin.c', 'mersenne.c', 'slatkin.i'])],
+	  ext_modules = [Extension('_slatkin', sources = ['slatkin.c', 'mersenne.c', 'slatkin.i'], libraries=['m'])],
 	)
 
