@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-g -c -Wall
 INCLUDEDIR=-I.
-LDFLAGS=
+LDFLAGS=-lm
 EXECUTABLES=slatkin-enumerate slatkin-mc 
 SOURCES=slatkin.c enumerate.c montecarlo.c mersenne.c
 SWIG_SRC=slatkin.i
@@ -9,7 +9,7 @@ OBJECTS=$(SOURCES:.c=.o)
 SWIG=swig -python
 
 
-all: $(EXECUTABLES) $(OBJECTS) python
+all: python
 	
 
 python:
