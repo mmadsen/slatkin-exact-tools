@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
-
-#include "slatkin.h"
+/*
+#include <omp.h>
+*/
+#include "slatkin_impl.h"
 #include "mersenne.h"
+
 
 
 static int seed;
@@ -145,6 +148,11 @@ slatkin_result slatkin_mc(int maxreps, int r_obs[]) {
 
     return results;
 }
+
+
+
+
+
 
 
 

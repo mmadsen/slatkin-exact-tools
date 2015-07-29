@@ -21,6 +21,7 @@ typedef struct {
 /* Main API function, should be called from outside */
 
 slatkin_result slatkin_mc(int maxreps, int r_obs[]);
+/* slatkin_result slatkin_mc_parallel(int maxreps, int r_obs[]); */
 void montecarlo(int maxreps, int** counts, int numalleles, double* probability, double* theta_estimate);
 
 

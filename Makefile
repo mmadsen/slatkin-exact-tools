@@ -3,19 +3,15 @@ CFLAGS=-g -c -Wall
 INCLUDEDIR=-I.
 LDFLAGS=
 EXECUTABLES=slatkin-enumerate slatkin-mc 
-SOURCES=slatkin.c enumerate.c montecarlo.c mersenne.c
-SWIG_SRC=slatkin.i
+SOURCES=slatkin_impl.c enumerate.c montecarlo.c mersenne.c
 OBJECTS=$(SOURCES:.c=.o)
-SWIG=swig -python
 
 
 all: $(EXECUTABLES) $(OBJECTS) python
 	
 
 python:
-	$(SWIG) $(SWIG_SRC)
 	python setup.py build_ext
-	python setup.py build
 
 install:
 	python setup.py install
@@ -35,5 +31,5 @@ mc-loop-test: $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f *.o $(EXECUTABLES) slatkin_wrap.c slatkin.py *.so *.pyc
+	rm -f *.o $(EXECUTABLES) *.so *.pyc slatkin.c
 	rm -rf build
