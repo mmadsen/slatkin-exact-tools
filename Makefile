@@ -1,13 +1,13 @@
 CC=gcc
 CFLAGS=-g -c -Wall
 INCLUDEDIR=-I.
-LDFLAGS=
+LDFLAGS=-lm
 EXECUTABLES=slatkin-enumerate slatkin-mc 
 SOURCES=slatkin_impl.c enumerate.c montecarlo.c mersenne.c
 OBJECTS=$(SOURCES:.c=.o)
 
 
-all: $(EXECUTABLES) $(OBJECTS) python
+all: python
 	
 
 python:
