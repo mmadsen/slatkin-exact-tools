@@ -26,26 +26,48 @@ This modification is designed to allow easy scripting of Slatkin Exact tests, si
 
 ### Python Module ###
 
-The build process now constructs a Python extension module, wrapping the C language `montecarlo()` function, and constructing a wrapper module.  The python implementation works as follows:
+The build process constructs a Cython-based extension module, wrapping the C language `montecarlo()` function, and constructing a wrapper module.  The python implementation works as follows:
 
 ```python
 
-from slatkin import montecarlo
+from slatkin import ewens_montecarlo
 
 # Do 100K monte carlo replicates
 mc_reps = 100000 
 
 counts = [91, 56, 27, 9, 7, 3, 1]
 
-(prob, theta) = montecarlo(mc_reps, counts, len(counts))
+(prob, theta) = ewens_montecarlo(mc_reps, counts)
 
 print "prob: %s    theta: %s" % (prob, theta)
 
 ```
 
-Passing the length of the list is ugly, and un-Pythonic, but it also made figuring out the input typemap for converting the Python list _vastly_ easier.  As in, nothing else I was trying would work.  This may change in a future version if I learn more about SWIG typemapping.
 
 The python module is constructed most easily by running `make python` or `make all`, and is installed by running `make pyinstall`.  The latter will install the built module to the user's current Python distribution, as determined by the python interpreter in the user's path.  In some cases, you may need `sudo make pyinstall` to make this work, or to make the module available for all users on the system.  
+
+
+### Compatibility with Version 1.2 and Previous Revisions ###
+
+Prior to Version 1.3, I was using SWIG to generate the Python to C wrapper code and frankly, the typemaps for getting the list in and out are confusing, so I took the easy way out and passed the length of the list
+as a parameter to the `montecarlo()` function.  
+
+In Version 1.3, I rewrote the wrapper using Cython, which is a really fabulous system.  Not only is the complexity vastly reduced, but once the OS X clang compiler handles OpenMP again, I'm set for parallelizing 
+the monte carlo replicates across cores, which will help in situations with many trait counts and large numbers of replicates (which you'd want with many traits to get a stable answer).  
+
+The former syntax is used in a number of my running simulation codes, though, so for compatibility, the old calling convention is:
+
+```python
+
+from slatkin import montecarlo
+ 
+counts = [91, 56, 27, 9, 7, 3, 1]
+
+(prob, theta) = montecarlo(mc_reps, counts, len(counts))
+
+print "prob: %s    theta: %s" % (prob, theta)
+```
+
 
 ### Random Number Generator ###
 
