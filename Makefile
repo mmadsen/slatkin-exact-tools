@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -c -Wall
+CFLAGS=-g -c -Wall 
 INCLUDEDIR=-I.
 LDFLAGS=-lm
 EXECUTABLES=slatkin-enumerate slatkin-mc 
@@ -18,13 +18,13 @@ install:
 
 
 slatkin-enumerate: enumerate.o
-	$(CC) -o slatkin-enumerate enumerate.o
+	$(CC) -o slatkin-enumerate enumerate.o -lm
 
 slatkin-mc: $(OBJECTS)
-	$(CC) -o slatkin-mc slatkin.o montecarlo.o mersenne.o
+	$(CC) -o slatkin-mc slatkin_impl.o montecarlo.o mersenne.o -lm
 
 mc-loop-test: $(OBJECTS)
-	$(CC) -o mc-loop-test mc_loop_test.o slatkin.o
+	$(CC) -o mc-loop-test mc_loop_test.o slatkin.o -lm
 
 
 .c.o:

@@ -6,6 +6,12 @@ Command line tools and Python module for Montgomery Slatkin's "Exact" test of ne
 Author:  Mark E. Madsen, Dept. of Anthropology, University of Washington
 
 
+### Acknowledgements ###
+
+Thanks to Alden H. Wright and colleagues, Dept. of Computer Science, University of Montana, for contributing bug fixes and a Makefile for the test code.  
+
+
+
 ### Goal ###
 
 This package is a refactoring of Montgomery Slatkin's [code for an "Exact" test for neutrality](http://ib.berkeley.edu/labs/slatkin/monty/Ewens_exact.program).  
